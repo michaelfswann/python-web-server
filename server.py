@@ -23,6 +23,18 @@ class MyServer(BaseHTTPRequestHandler):
         self.wfile.write(bytes("<p>Hello World!</p>", "utf-8"))
         self.wfile.write(bytes("</body></html>", "utf-8"))
 
+    def do_HEAD(self):
+        self._set_headers()
+
+    def do_POST(self):
+        # Doesn't do anything with posted data
+        content_length = int(
+            self.headers["Content-Length"]
+        )  # <--- Gets the size of data
+        post_data = self.rfile.read(content_length)  # <--- Gets the data itself
+        print(post_data)  # <-- Print post data
+        self._set_headers()
+
 
 # module is being run as standalone module so python assigns __name__ as __main__
 
